@@ -1,0 +1,130 @@
+"""Textos do PULSE - Patagonian Interference Engine em múltiplos idiomas.
+
+Estrutura idêntica em todos os idiomas.
+"""
+
+TRANSLATIONS = {
+    "pt": {
+        "page_title": "PULSE · Patagonian Interference Engine",
+        "hero_tag": "INTERFERÊNCIA TERRITORIAL · PUERTO WILLIAMS · TIERRA DEL FUEGO",
+        "hero_title": "PULSE\nPatagonian Unified Layered\nSocio-Environmental Engine",
+        "hero_subtitle": "Ferramenta autoral de mapeamento de interferência entre pressões ambientais. "
+                         "Em vez de medir apenas resiliência, o PULSE identifica onde as pressões se amplificam mutuamente "
+                         "em Puerto Williams e Tierra del Fuego.",
+        "badge1": "🫀 Interferência Territorial",
+        "badge2": "Puerto Williams · Chile",
+        "badge3": "Patagônia",
+        "badge4": "Protótipo 2026",
+        "badge5": "Camadas Socioambientais",
+        "m1": "Índice de Interferência",
+        "m2": "Camadas Ativas",
+        "m3": "Zonas Críticas",
+        "m4": "Território",
+        "m4_value": "PW",
+        "tab1": "🗺️ Mapa de Interferência",
+        "tab2": "📡 Radar de Pressões",
+        "tab3": "📈 Evolução Temporal",
+        "tab4": "⚠️ Pontos Críticos",
+        "tab5": "ℹ️ Sobre o PULSE",
+        "map_label": "MAPA DE INTERFERÊNCIA",
+        "map_title": "Zonas de Amplificação de Pressões — Puerto Williams",
+        "map_hint": "Áreas em vermelho/laranja indicam onde múltiplas pressões ambientais se reforçam mutuamente.",
+        "radar_label": "PRESSÕES ATUAIS",
+        "radar_title": "Radar de Intensidade das Pressões",
+        "timeline_label": "EVOLUÇÃO",
+        "timeline_title": "Evolução da Interferência (2015–2025)",
+        "critical_label": "ALERTAS",
+        "critical_title": "Pontos de Atenção Automáticos",
+        "about_label": "CONCEITO",
+        "about_title": "O que é o PULSE?",
+        "about_text": "O PULSE (Patagonian Unified Layered Socio-Environmental Engine) é uma ferramenta <b>autoral</b> "
+                      "que analisa como diferentes pressões ambientais se <b>amplificam mutuamente</b> em um território. "
+                      "Em vez de perguntar “quão resiliente é o sistema?”, ele pergunta: "
+                      "“Onde as pressões estão se interferindo de forma destrutiva?”",
+        "footer_title": "PULSE — Patagonian Interference Engine",
+        "footer_copy": "© 2026 · Amauri Almeida · Protótipo autoral de Interferência Territorial · Puerto Williams, Chile",
+        "months": ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"],
+    },
+    "en": {
+        "page_title": "PULSE · Patagonian Interference Engine",
+        "hero_tag": "TERRITORIAL INTERFERENCE · PUERTO WILLIAMS · TIERRA DEL FUEGO",
+        "hero_title": "PULSE\nPatagonian Unified Layered\nSocio-Environmental Engine",
+        "hero_subtitle": "An original tool for mapping interference between environmental pressures. "
+                         "Instead of only measuring resilience, PULSE identifies where pressures amplify each other "
+                         "in Puerto Williams and Tierra del Fuego.",
+        "badge1": "🫀 Territorial Interference",
+        "badge2": "Puerto Williams · Chile",
+        "badge3": "Patagonia",
+        "badge4": "Prototype 2026",
+        "badge5": "Socio-Environmental Layers",
+        "m1": "Interference Index",
+        "m2": "Active Layers",
+        "m3": "Critical Zones",
+        "m4": "Territory",
+        "m4_value": "PW",
+        "tab1": "🗺️ Interference Map",
+        "tab2": "📡 Pressure Radar",
+        "tab3": "📈 Temporal Evolution",
+        "tab4": "⚠️ Critical Points",
+        "tab5": "ℹ️ About PULSE",
+        "map_label": "INTERFERENCE MAP",
+        "map_title": "Pressure Amplification Zones — Puerto Williams",
+        "map_hint": "Red/orange areas indicate where multiple environmental pressures reinforce each other.",
+        "radar_label": "CURRENT PRESSURES",
+        "radar_title": "Pressure Intensity Radar",
+        "timeline_label": "EVOLUTION",
+        "timeline_title": "Interference Evolution (2015–2025)",
+        "critical_label": "ALERTS",
+        "critical_title": "Automatic Attention Points",
+        "about_label": "CONCEPT",
+        "about_title": "What is PULSE?",
+        "about_text": "PULSE (Patagonian Unified Layered Socio-Environmental Engine) is an <b>original</b> tool "
+                      "that analyzes how different environmental pressures <b>amplify each other</b> in a territory. "
+                      "Instead of asking “how resilient is the system?”, it asks: "
+                      "“Where are pressures interfering destructively?”",
+        "footer_title": "PULSE — Patagonian Interference Engine",
+        "footer_copy": "© 2026 · Amauri Almeida · Original Territorial Interference Prototype · Puerto Williams, Chile",
+        "months": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+    },
+    "es": {
+        "page_title": "PULSE · Patagonian Interference Engine",
+        "hero_tag": "INTERFERENCIA TERRITORIAL · PUERTO WILLIAMS · TIERRA DEL FUEGO",
+        "hero_title": "PULSE\nPatagonian Unified Layered\nSocio-Environmental Engine",
+        "hero_subtitle": "Herramienta original de mapeo de interferencia entre presiones ambientales. "
+                         "En lugar de medir solo resiliencia, PULSE identifica dónde las presiones se amplifican mutuamente "
+                         "en Puerto Williams y Tierra del Fuego.",
+        "badge1": "🫀 Interferencia Territorial",
+        "badge2": "Puerto Williams · Chile",
+        "badge3": "Patagonia",
+        "badge4": "Prototipo 2026",
+        "badge5": "Capas Socioambientales",
+        "m1": "Índice de Interferencia",
+        "m2": "Capas Activas",
+        "m3": "Zonas Críticas",
+        "m4": "Territorio",
+        "m4_value": "PW",
+        "tab1": "🗺️ Mapa de Interferencia",
+        "tab2": "📡 Radar de Presiones",
+        "tab3": "📈 Evolución Temporal",
+        "tab4": "⚠️ Puntos Críticos",
+        "tab5": "ℹ️ Sobre PULSE",
+        "map_label": "MAPA DE INTERFERENCIA",
+        "map_title": "Zonas de Amplificación de Presiones — Puerto Williams",
+        "map_hint": "Las áreas en rojo/naranja indican dónde múltiples presiones ambientales se refuerzan mutuamente.",
+        "radar_label": "PRESIONES ACTUALES",
+        "radar_title": "Radar de Intensidad de Presiones",
+        "timeline_label": "EVOLUCIÓN",
+        "timeline_title": "Evolución de la Interferencia (2015–2025)",
+        "critical_label": "ALERTAS",
+        "critical_title": "Puntos de Atención Automáticos",
+        "about_label": "CONCEPTO",
+        "about_title": "¿Qué es PULSE?",
+        "about_text": "PULSE (Patagonian Unified Layered Socio-Environmental Engine) es una herramienta <b>original</b> "
+                      "que analiza cómo diferentes presiones ambientales se <b>amplifican mutuamente</b> en un territorio. "
+                      "En lugar de preguntar “¿qué tan resiliente es el sistema?”, pregunta: "
+                      "“¿Dónde las presiones se interfieren de forma destructiva?”",
+        "footer_title": "PULSE — Patagonian Interference Engine",
+        "footer_copy": "© 2026 · Amauri Almeida · Prototipo original de Interferencia Territorial · Puerto Williams, Chile",
+        "months": ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"],
+    },
+}

@@ -361,7 +361,25 @@ with tab1:
     st.markdown(f'<div class="section-title">{T["map_title"]}</div>', unsafe_allow_html=True)
     st.markdown(f'<div class="info-card">{T["map_hint"]}</div>', unsafe_allow_html=True)
 
-    m = folium.Map(location=[-54.933, -67.617], zoom_start=11, tiles="CartoDB positron")
+    # --- Mapa com suporte a chave CARTO ---
+    carto_key = st.secrets.get("CARTO_API_KEY", "")
+
+    if carto_key:
+        tiles_url = f"https://{{s}}.basemaps.cartocdn.com/light_all/{{z}}/{{x}}/{{y}}{{r}}.png?key={carto_key}"
+        attr = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+        m = folium.Map(
+            location=[-54.933, -67.617],
+            zoom_start=11,
+            tiles=tiles_url,
+            attr=attr
+        )
+    else:
+        # Fallback gratuito caso a chave não esteja nos Secrets
+        m = folium.Map(
+            location=[-54.933, -67.617],
+            zoom_start=11,
+            tiles="OpenStreetMap"
+        )
 
     for z in zonas:
         cor = "#E11D48" if z["II"] >= 0.70 else "#F97316" if z["II"] >= 0.55 else "#22C55E"
@@ -401,7 +419,6 @@ with tab1:
     st.dataframe(df, use_container_width=True, hide_index=True)
 
     st.info("**Leitura:** Mesmo com água de excelente qualidade (W baixo), a combinação de alta pressão de castores + risco sísmico elevado gera interferência significativa, especialmente nas zonas Sul e Leste.")
-
 # --- TAB 2: RADAR ---
 with tab2:
     st.markdown(f'<div class="section-label">{T["radar_label"]}</div>', unsafe_allow_html=True)

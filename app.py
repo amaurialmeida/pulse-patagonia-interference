@@ -86,14 +86,14 @@ def plot(fig):
 def calcular_interferencia(W, I, S, C, V):
     """
     Índice de Interferência (0 a 1)
-    Baseado em interações reais observadas em Puerto Williams.
+    Baseado em interações observadas em Puerto Williams.
     """
     inter1 = I * W * 1.0      # Invasoras × Água
     inter2 = W * C * 0.8      # Água × Clima
-    inter3 = I * V * 0.9      # Invasoras × Vegetação (muito forte na região)
+    inter3 = I * V * 0.9      # Invasoras × Vegetação (forte na região)
     inter4 = S * W * 0.5      # Sísmico × Água
     inter5 = C * V * 0.7      # Clima × Vegetação
-    inter6 = I * S * 0.4      # Invasoras × Sísmico (interação secundária)
+    inter6 = I * S * 0.4      # Invasoras × Sísmico
 
     ii_bruto = inter1 + inter2 + inter3 + inter4 + inter5 + inter6
     ii_final = 1 - np.exp(-ii_bruto)
@@ -101,64 +101,43 @@ def calcular_interferencia(W, I, S, C, V):
 
 
 # ============================================================
-# DADOS REALISTAS BASEADOS NOS PROJETOS DO PORTFÓLIO
+# DADOS REALISTAS (derivados dos projetos do portfólio)
 # ============================================================
 # Fontes:
 # - Água: patagonia-water-quality (WQI Beagle Channel = 97)
-# - Invasoras: invasive-alien-species-impact (castores + campo 2025)
-# - Sísmico: patagonia-seismic (M7.4 maio/2025 + falha Magallanes-Fagnano)
-# - Vegetação: impacto dos castores (NDVI + observação de campo)
-# - Clima: condições subantárticas da região
+# - Invasoras: invasive-alien-species-impact (110k+ castores)
+# - Sísmico: patagonia-seismic (Very High + M7.4)
+# - Vegetação: impacto documentado dos castores
+# - Clima: regime de ventos + projeção El Niño
 
 zonas = [
     {
         "nome": "Zona Norte - Canal Beagle",
         "lat": -54.910, "lon": -67.580,
-        "W": 0.12,   # Água excelente (próximo da estação WQI 97)
-        "I": 0.78,   # Presença significativa de castores
-        "S": 0.75,   # Alta exposição sísmica
-        "C": 0.58,
-        "V": 0.70
+        "W": 0.12, "I": 0.78, "S": 0.75, "C": 0.58, "V": 0.70
     },
     {
         "nome": "Zona Centro - Puerto Williams",
         "lat": -54.933, "lon": -67.617,
-        "W": 0.08,   # Melhor qualidade de água (WQI 97)
-        "I": 0.85,   # Castoreiras documentadas perto do centro
-        "S": 0.82,   # Diretamente sobre a falha + vivência do M7.4
-        "C": 0.60,
-        "V": 0.72
+        "W": 0.08, "I": 0.85, "S": 0.82, "C": 0.60, "V": 0.72
     },
     {
         "nome": "Zona Sul - Interior Navarino",
         "lat": -54.960, "lon": -67.650,
-        "W": 0.18,
-        "I": 0.91,   # Maior densidade de impacto de castores
-        "S": 0.70,
-        "C": 0.55,
-        "V": 0.85    # Forte degradação florestal
+        "W": 0.18, "I": 0.91, "S": 0.70, "C": 0.55, "V": 0.85
     },
     {
-        "nome": "Zona Leste - Laguna Rosa / Área Úmida",
+        "nome": "Zona Leste - Laguna Rosa",
         "lat": -54.925, "lon": -67.550,
-        "W": 0.22,
-        "I": 0.88,   # Castoreira 2 documentada (Laguna Rosa)
-        "S": 0.68,
-        "C": 0.62,
-        "V": 0.80
+        "W": 0.22, "I": 0.88, "S": 0.68, "C": 0.62, "V": 0.80
     },
     {
         "nome": "Zona Oeste - Interior",
         "lat": -54.940, "lon": -67.700,
-        "W": 0.15,
-        "I": 0.72,
-        "S": 0.73,
-        "C": 0.52,
-        "V": 0.65
+        "W": 0.15, "I": 0.72, "S": 0.73, "C": 0.52, "V": 0.65
     },
 ]
 
-# Calcula o II de cada zona
 for z in zonas:
     z["II"] = calcular_interferencia(z["W"], z["I"], z["S"], z["C"], z["V"])
 
@@ -353,33 +332,30 @@ st.markdown("<br>", unsafe_allow_html=True)
 # ============================================================
 # ABAS
 # ============================================================
-tab1, tab2, tab3, tab4, tab5 = st.tabs([T["tab1"], T["tab2"], T["tab3"], T["tab4"], T["tab5"]])
+tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs([
+    T.get("tab1", "🗺️ Mapa de Interferência"),
+    T.get("tab2", "📡 Radar de Pressões"),
+    "🌡️ Termômetro Vivo",
+    T.get("tab3", "📈 Evolução Temporal"),
+    T.get("tab4", "⚠️ Pontos Críticos"),
+    T.get("tab5", "ℹ️ Sobre o PULSE")
+])
 
 # --- TAB 1: MAPA + TABELA ---
 with tab1:
-    st.markdown(f'<div class="section-label">{T["map_label"]}</div>', unsafe_allow_html=True)
-    st.markdown(f'<div class="section-title">{T["map_title"]}</div>', unsafe_allow_html=True)
-    st.markdown(f'<div class="info-card">{T["map_hint"]}</div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="section-label">{T.get("map_label", "MAPA DE INTERFERÊNCIA")}</div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="section-title">{T.get("map_title", "Zonas de Amplificação de Pressões — Puerto Williams")}</div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="info-card">{T.get("map_hint", "Áreas em vermelho/laranja indicam onde múltiplas pressões ambientais se reforçam mutuamente.")}</div>', unsafe_allow_html=True)
 
-    # --- Mapa com suporte a chave CARTO ---
+    # Mapa com suporte a chave CARTO
     carto_key = st.secrets.get("CARTO_API_KEY", "")
 
     if carto_key:
         tiles_url = f"https://{{s}}.basemaps.cartocdn.com/light_all/{{z}}/{{x}}/{{y}}{{r}}.png?key={carto_key}"
         attr = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
-        m = folium.Map(
-            location=[-54.933, -67.617],
-            zoom_start=11,
-            tiles=tiles_url,
-            attr=attr
-        )
+        m = folium.Map(location=[-54.933, -67.617], zoom_start=11, tiles=tiles_url, attr=attr)
     else:
-        # Fallback gratuito caso a chave não esteja nos Secrets
-        m = folium.Map(
-            location=[-54.933, -67.617],
-            zoom_start=11,
-            tiles="OpenStreetMap"
-        )
+        m = folium.Map(location=[-54.933, -67.617], zoom_start=11, tiles="OpenStreetMap")
 
     for z in zonas:
         cor = "#E11D48" if z["II"] >= 0.70 else "#F97316" if z["II"] >= 0.55 else "#22C55E"
@@ -418,11 +394,12 @@ with tab1:
     ])
     st.dataframe(df, use_container_width=True, hide_index=True)
 
-    st.info("**Leitura:** Mesmo com água de excelente qualidade (W baixo), a combinação de alta pressão de castores + risco sísmico elevado gera interferência significativa, especialmente nas zonas Sul e Leste.")
+    st.info("**Leitura:** Mesmo com água de excelente qualidade (WQI 97), a combinação de alta pressão de castores + risco sísmico elevado gera interferência significativa, especialmente nas zonas Sul e Leste.")
+
 # --- TAB 2: RADAR ---
 with tab2:
-    st.markdown(f'<div class="section-label">{T["radar_label"]}</div>', unsafe_allow_html=True)
-    st.markdown(f'<div class="section-title">{T["radar_title"]}</div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="section-label">{T.get("radar_label", "RADAR DE PRESSÕES")}</div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="section-title">{T.get("radar_title", "Perfil médio de pressões no território")}</div>', unsafe_allow_html=True)
 
     media_W = np.mean([z["W"] for z in zonas])
     media_I = np.mean([z["I"] for z in zonas])
@@ -458,29 +435,136 @@ with tab2:
 
     st.info(f"Médias do território: Água={fmt(media_W)} | Invasoras={fmt(media_I)} | Sísmico={fmt(media_S)} | Clima={fmt(media_C)} | Vegetação={fmt(media_V)}")
 
-# --- TAB 3: EVOLUÇÃO ---
+# --- TAB 3: TERMÔMETRO VIVO ---
 with tab3:
-    st.markdown(f'<div class="section-label">{T["timeline_label"]}</div>', unsafe_allow_html=True)
-    st.markdown(f'<div class="section-title">{T["timeline_title"]}</div>', unsafe_allow_html=True)
+    st.markdown('<div class="section-label">TERMÔMETRO VIVO DA PATAGÔNIA</div>', unsafe_allow_html=True)
+    st.markdown('<div class="section-title">Sinais dos seus projetos no território</div>', unsafe_allow_html=True)
+
+    st.markdown("""
+    <div class="info-card">
+        Este painel reúne os principais indicadores dos seus projetos da Patagônia.
+        Cada sinal alimenta o <b>Índice de Interferência</b> do PULSE.
+    </div>
+    """, unsafe_allow_html=True)
+
+    # Dados reais extraídos dos repositórios
+    sinais = [
+        {
+            "nome": "Qualidade da Água",
+            "projeto": "patagonia-water-quality",
+            "valor": "WQI 97",
+            "detalhe": "Beagle Channel · Puerto Williams (PA-17)",
+            "pressao": 0.08,
+            "nivel": "Baixa",
+            "cor": "#22C55E",
+            "icone": "💧",
+            "link": "https://patagonia-water-quality.streamlit.app/"
+        },
+        {
+            "nome": "Espécies Invasoras (Castores)",
+            "projeto": "invasive-alien-species-impact",
+            "valor": "110.000+",
+            "detalhe": "70.600 represas · ~31.000 ha destruídos",
+            "pressao": 0.88,
+            "nivel": "Muito Alta",
+            "cor": "#E11D48",
+            "icone": "🦫",
+            "link": "https://invasive-alien-species-impact.streamlit.app/"
+        },
+        {
+            "nome": "Risco Sísmico",
+            "projeto": "patagonia-seismic",
+            "valor": "Very High",
+            "detalhe": "M7.4 (maio/2025) · MMI V–VI · 50+ réplicas",
+            "pressao": 0.82,
+            "nivel": "Muito Alta",
+            "cor": "#E11D48",
+            "icone": "🌋",
+            "link": "https://patagonia-seismic.streamlit.app/"
+        },
+        {
+            "nome": "Potencial Eólico / Vento",
+            "projeto": "patagonia-wind-energy",
+            "valor": ">60% CF",
+            "detalhe": "9.500+ MW potencial · Screaming Sixties",
+            "pressao": 0.65,
+            "nivel": "Alta",
+            "cor": "#F97316",
+            "icone": "🌬️",
+            "link": "https://patagonia-wind-energy.streamlit.app/"
+        },
+        {
+            "nome": "El Niño 2026",
+            "projeto": "el-nino-2026-ml-forecast",
+            "valor": "Strong",
+            "detalhe": "Anomalia projetada +1,5 a +2,5°C (out–nov 2026)",
+            "pressao": 0.70,
+            "nivel": "Alta",
+            "cor": "#F97316",
+            "icone": "🌊",
+            "link": "https://el-nino-2026-ml-forecast.streamlit.app/"
+        },
+    ]
+
+    for s in sinais:
+        col1, col2, col3 = st.columns([0.12, 0.58, 0.30])
+        with col1:
+            st.markdown(f"<div style='font-size:2.6rem; text-align:center;'>{s['icone']}</div>", unsafe_allow_html=True)
+        with col2:
+            st.markdown(f"**{s['nome']}**")
+            st.caption(s["detalhe"])
+            st.progress(s["pressao"])
+        with col3:
+            st.markdown(f"""
+            <div style="background:{s['cor']}22; border:1px solid {s['cor']};
+                        border-radius:10px; padding:10px; text-align:center;">
+                <div style="font-size:1.15rem; font-weight:700; color:{s['cor']};">{s['valor']}</div>
+                <div style="font-size:0.75rem; color:#666;">{s['nivel']}</div>
+            </div>
+            """, unsafe_allow_html=True)
+        st.markdown(f"<small>Fonte: <a href='{s['link']}' target='_blank'>{s['projeto']}</a></small>", unsafe_allow_html=True)
+        st.markdown("---")
+
+    # Resumo
+    media_pressao = sum(s["pressao"] for s in sinais) / len(sinais)
+    c1, c2, c3 = st.columns(3)
+    with c1:
+        st.metric("Pressão Média dos Sinais", f"{media_pressao:.2f}")
+    with c2:
+        st.metric("Sinais em Alerta Alto", "3 de 5")
+    with c3:
+        st.metric("Principal Motor", "Castores + Sísmico")
+
+    st.info("""
+    **Interpretação atual:**  
+    A água em Puerto Williams está em excelente estado (WQI 97).  
+    No entanto, a combinação de **pressão muito alta de castores** + **risco sísmico Very High** 
+    gera o principal núcleo de interferência no território.  
+    O regime de ventos extremo e a projeção de Strong El Niño para 2026 adicionam pressão climática de médio prazo.
+    """)
+
+# --- TAB 4: EVOLUÇÃO ---
+with tab4:
+    st.markdown(f'<div class="section-label">{T.get("timeline_label", "EVOLUÇÃO TEMPORAL")}</div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="section-title">{T.get("timeline_title", "Tendência do Índice de Interferência")}</div>', unsafe_allow_html=True)
 
     years = list(range(2015, 2026))
-    # Tendência crescente realista (invasoras avançando + risco sísmico constante)
     base = 0.48
     interference = [round(base + (i * 0.018), 3) for i in range(11)]
     interference[-1] = indice_geral
 
     fig_line = px.line(x=years, y=interference, markers=True,
-                       labels={"x": "Ano" if LANG != "en" else "Year", "y": T["m1"]})
+                       labels={"x": "Ano" if LANG != "en" else "Year", "y": T.get("m1", "Índice de Interferência")})
     fig_line.update_traces(line_color="#E11D48", line_width=3)
     fig_line.update_layout(height=420, paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)")
     plot(fig_line)
 
     st.caption("Tendência ilustrativa baseada no avanço documentado dos castores e na permanência do risco sísmico na região.")
 
-# --- TAB 4: PONTOS CRÍTICOS ---
-with tab4:
-    st.markdown(f'<div class="section-label">{T["critical_label"]}</div>', unsafe_allow_html=True)
-    st.markdown(f'<div class="section-title">{T["critical_title"]}</div>', unsafe_allow_html=True)
+# --- TAB 5: PONTOS CRÍTICOS ---
+with tab5:
+    st.markdown(f'<div class="section-label">{T.get("critical_label", "PONTOS CRÍTICOS")}</div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="section-title">{T.get("critical_title", "Zonas de maior interferência")}</div>', unsafe_allow_html=True)
 
     for z in zonas_sorted[:3]:
         if z["II"] >= 0.70:
@@ -495,21 +579,23 @@ with tab4:
             st.info(f"**{z['nome']}** — Índice II = **{z['II']}**\n\n"
                     f"- Situação relativamente mais estável")
 
-# --- TAB 5: SOBRE ---
-with tab5:
-    st.markdown(f'<div class="section-label">{T["about_label"]}</div>', unsafe_allow_html=True)
-    st.markdown(f'<div class="section-title">{T["about_title"]}</div>', unsafe_allow_html=True)
-    st.markdown(f'<div class="info-card">{T["about_text"]}</div>', unsafe_allow_html=True)
+# --- TAB 6: SOBRE ---
+with tab6:
+    st.markdown(f'<div class="section-label">{T.get("about_label", "SOBRE O PULSE")}</div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="section-title">{T.get("about_title", "Patagonian Unified Layered Socio-Environmental Engine")}</div>', unsafe_allow_html=True)
+    
+    st.markdown(f'<div class="info-card">{T.get("about_text", "O PULSE é uma ferramenta de diagnóstico de interferência territorial. Em vez de monitorar indicadores isolados, ele mostra onde as pressões ambientais se reforçam mutuamente.")}</div>', unsafe_allow_html=True)
 
     st.markdown("### Fontes dos valores utilizados")
     st.markdown("""
-- **Qualidade da Água** → projeto `patagonia-water-quality` (WQI Beagle Channel = 97)
-- **Espécies Invasoras** → projeto `invasive-alien-species-impact` (campo 2025 + literatura)
-- **Sismicidade** → projeto `patagonia-seismic` (M7.4 maio/2025 + falha Magallanes-Fagnano)
-- **Vegetação** → impacto documentado dos castores (NDVI + observação de campo)
+- **Qualidade da Água** → `patagonia-water-quality` (WQI Beagle Channel = 97)
+- **Espécies Invasoras** → `invasive-alien-species-impact` (110.000+ castores · 70.600 represas)
+- **Sismicidade** → `patagonia-seismic` (Very High · M7.4 maio/2025)
+- **Potencial Eólico** → `patagonia-wind-energy` (>60% capacity factor · 9.500+ MW)
+- **El Niño 2026** → `el-nino-2026-ml-forecast` (Strong · +1,5 a +2,5°C)
 """)
 
-    st.markdown("### Fórmula")
+    st.markdown("### Fórmula do Índice de Interferência")
     st.code("""
 II = 1 - exp( -(I×W×1.0 + W×C×0.8 + I×V×0.9 + S×W×0.5 + C×V×0.7 + I×S×0.4) )
 """, language="text")
@@ -519,7 +605,7 @@ II = 1 - exp( -(I×W×1.0 + W×C×0.8 + I×V×0.9 + S×W×0.5 + C×V×0.7 + I×S
 # ============================================================
 st.markdown(f"""
 <div class="footer-wrap">
-  <div class="footer-title">{T['footer_title']}</div>
-  <div>{T['footer_copy']}</div>
+  <div class="footer-title">{T.get('footer_title', 'PULSE · Patagonian Interference Engine')}</div>
+  <div>{T.get('footer_copy', '© 2025–2026 · Amauri Almeida · Independent Field Research')}</div>
 </div>
 """, unsafe_allow_html=True)
